@@ -1,0 +1,9 @@
+{
+  "repos": [
+    {
+      "id": "publicdash",
+      "organisation": "lnbits",
+      "repository": "publicdash"
+    }
+  ]
+}
