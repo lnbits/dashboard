@@ -10,11 +10,11 @@ from lnbits.helpers import template_renderer
 from lnbits.settings import settings
 from .crud import get_owner_data_by_id
 
-publicdash_generic_router = APIRouter()
+dashboard_generic_router = APIRouter()
 
 
-def publicdash_renderer():
-    return template_renderer(["publicdash/templates"])
+def dashboard_renderer():
+    return template_renderer(["dashboard/templates"])
 
 
 #######################################
@@ -25,17 +25,17 @@ def publicdash_renderer():
 # Backend admin page
 
 
-@publicdash_generic_router.get("/", response_class=HTMLResponse)
+@dashboard_generic_router.get("/", response_class=HTMLResponse)
 async def index(req: Request, user: User = Depends(check_user_exists)):
-    return publicdash_renderer().TemplateResponse(
-        "publicdash/index.html", {"request": req, "user": user.json()}
+    return dashboard_renderer().TemplateResponse(
+        "dashboard/index.html", {"request": req, "user": user.json()}
     )
 
 
 # Frontend shareable page
 
 
-@publicdash_generic_router.get("/{owner_data_id}")
+@dashboard_generic_router.get("/{owner_data_id}")
 async def owner_data_public_page(req: Request, owner_data_id: str):
     owner_data = await get_owner_data_by_id(owner_data_id)
     if not owner_data:
@@ -43,8 +43,8 @@ async def owner_data_public_page(req: Request, owner_data_id: str):
 
     public_page_name = getattr(owner_data, "", "")
 
-    return publicdash_renderer().TemplateResponse(
-        "publicdash/public_page.html",
+    return dashboard_renderer().TemplateResponse(
+        "dashboard/public_page.html",
         {
             "request": req,
             "owner_data_id": owner_data_id,
@@ -54,7 +54,7 @@ async def owner_data_public_page(req: Request, owner_data_id: str):
 
 
 
-@publicdash_generic_router.get("/manifest/{owner_data_id}.webmanifest")
+@dashboard_generic_router.get("/manifest/{owner_data_id}.webmanifest")
 async def manifest(owner_data_id: str):
     owner_data = await get_owner_data_by_id(owner_data_id)
     if not owner_data:
@@ -74,11 +74,11 @@ async def manifest(owner_data_id: str):
                 "sizes": "900x900",
             }
         ],
-        "start_url": "/publicdash/" + owner_data_id,
+        "start_url": "/dashboard/" + owner_data_id,
         "background_color": "#1F2234",
         "description": "Bitcoin Lightning Scrum",
         "display": "standalone",
-        "scope": "/publicdash/" + owner_data_id,
+        "scope": "/dashboard/" + owner_data_id,
         "theme_color": "#1F2234",
         "shortcuts": [
             {

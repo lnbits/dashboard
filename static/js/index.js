@@ -160,7 +160,7 @@ window.app = Vue.createApp({
         const entry = data.id ? `/${data.id}` : ''
         await LNbits.api.request(
           method,
-          '/publicdash/api/v1/owner_data' + entry,
+          '/dashboard/api/v1/owner_data' + entry,
           null,
           data
         )
@@ -181,7 +181,7 @@ window.app = Vue.createApp({
         )
         const {data} = await LNbits.api.request(
           'GET',
-          `/publicdash/api/v1/owner_data/paginated?${params}`,
+          `/dashboard/api/v1/owner_data/paginated?${params}`,
           null
         )
         this.ownerDataList = data.data
@@ -200,7 +200,7 @@ window.app = Vue.createApp({
             
             await LNbits.api.request(
               'DELETE',
-              '/publicdash/api/v1/owner_data/' + ownerDataId,
+              '/dashboard/api/v1/owner_data/' + ownerDataId,
               null
             )
             await this.getOwnerData()
@@ -237,7 +237,7 @@ window.app = Vue.createApp({
         const method = data.id ? 'PUT' : 'POST'
         await LNbits.api.request(
           method,
-          '/publicdash/api/v1/client_data',
+          '/dashboard/api/v1/client_data',
           null,
           data
         )
@@ -262,7 +262,7 @@ window.app = Vue.createApp({
         }
         const {data} = await LNbits.api.request(
           'GET',
-          `/publicdash/api/v1/client_data/paginated?${params}`,
+          `/dashboard/api/v1/client_data/paginated?${params}`,
           null
         )
         this.clientDataList = data.data
@@ -281,7 +281,7 @@ window.app = Vue.createApp({
             
             await LNbits.api.request(
               'DELETE',
-              '/publicdash/api/v1/client_data/' + clientDataId,
+              '/dashboard/api/v1/client_data/' + clientDataId,
               null
             )
             await this.getClientData()

@@ -85,7 +85,7 @@
         try {
           const {data} = await LNbits.api.request(
             'PUT',
-            `/publicdash/api/v1/client_data/public/${this.ownerDataId}`,
+            `/dashboard/api/v1/client_data/public/${this.ownerDataId}`,
             null,
             this.publicClientData
           )

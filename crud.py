@@ -13,13 +13,13 @@ from .models import (
     OwnerDataFilters,
 )
 
-db = Database("ext_publicdash")
+db = Database("ext_dashboard")
 
 
 ########################### Owner Data ############################
 async def create_owner_data(user_id: str, data: CreateOwnerData) -> OwnerData:
     owner_data = OwnerData(**data.dict(), id=urlsafe_short_hash(), user_id=user_id)
-    await db.insert("publicdash.owner_data", owner_data)
+    await db.insert("dashboard.owner_data", owner_data)
     return owner_data
 
 
@@ -29,7 +29,7 @@ async def get_owner_data(
 ) -> OwnerData | None:
     return await db.fetchone(
         """
-            SELECT * FROM publicdash.owner_data
+            SELECT * FROM dashboard.owner_data
             WHERE id = :id AND user_id = :user_id
         """,
         {"id": owner_data_id, "user_id": user_id},
@@ -42,7 +42,7 @@ async def get_owner_data_by_id(
 ) -> OwnerData | None:
     return await db.fetchone(
         """
-            SELECT * FROM publicdash.owner_data
+            SELECT * FROM dashboard.owner_data
             WHERE id = :id
         """,
         {"id": owner_data_id},
@@ -55,7 +55,7 @@ async def get_owner_data_ids_by_user(
 ) -> list[str]:
     rows: list[dict] = await db.fetchall(
         """
-            SELECT DISTINCT id FROM publicdash.owner_data
+            SELECT DISTINCT id FROM dashboard.owner_data
             WHERE user_id = :user_id
         """,
         {"user_id": user_id},
@@ -75,7 +75,7 @@ async def get_owner_data_paginated(
         values["user_id"] = user_id
 
     return await db.fetch_page(
-        "SELECT * FROM publicdash.owner_data",
+        "SELECT * FROM dashboard.owner_data",
         where=where,
         values=values,
         filters=filters,
@@ -84,14 +84,14 @@ async def get_owner_data_paginated(
 
 
 async def update_owner_data(data: OwnerData) -> OwnerData:
-    await db.update("publicdash.owner_data", data)
+    await db.update("dashboard.owner_data", data)
     return data
 
 
 async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
     await db.execute(
         """
-            DELETE FROM publicdash.owner_data
+            DELETE FROM dashboard.owner_data
             WHERE id = :id AND user_id = :user_id
         """,
         {"id": owner_data_id, "user_id": user_id},
@@ -103,7 +103,7 @@ async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
 
 async def create_client_data(owner_data_id: str, data: CreateClientData) -> ClientData:
     client_data = ClientData(**data.dict(), id=urlsafe_short_hash(), owner_data_id=owner_data_id)
-    await db.insert("publicdash.client_data", client_data)
+    await db.insert("dashboard.client_data", client_data)
     return client_data
 
 
@@ -113,7 +113,7 @@ async def get_client_data(
 ) -> ClientData | None:
     return await db.fetchone(
         """
-            SELECT * FROM publicdash.client_data
+            SELECT * FROM dashboard.client_data
             WHERE id = :id AND owner_data_id = :owner_data_id
         """,
         {"id": client_data_id, "owner_data_id": owner_data_id},
@@ -126,7 +126,7 @@ async def get_client_data_by_id(
 ) -> ClientData | None:
     return await db.fetchone(
         """
-            SELECT * FROM publicdash.client_data
+            SELECT * FROM dashboard.client_data
             WHERE id = :id
         """,
         {"id": client_data_id},
@@ -154,7 +154,7 @@ async def get_client_data_paginated(
     where.append(f"({or_clause})")
 
     return await db.fetch_page(
-        "SELECT * FROM publicdash.client_data",
+        "SELECT * FROM dashboard.client_data",
         where=where,
         values=values,
         filters=filters,
@@ -163,14 +163,14 @@ async def get_client_data_paginated(
 
 
 async def update_client_data(data: ClientData) -> ClientData:
-    await db.update("publicdash.client_data", data)
+    await db.update("dashboard.client_data", data)
     return data
 
 
 async def delete_client_data(owner_data_id: str, client_data_id: str) -> None:
     await db.execute(
         """
-            DELETE FROM publicdash.client_data
+            DELETE FROM dashboard.client_data
             WHERE id = :id AND owner_data_id = :owner_data_id
         """,
         {"id": client_data_id, "owner_data_id": owner_data_id},

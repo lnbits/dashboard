@@ -10,7 +10,7 @@
 window_vars(user) }}
 
 
-<script src="{{ static_url_for('publicdash/static', path='js/index.js') }}"></script>
+<script src="{{ static_url_for('dashboard/static', path='js/index.js') }}"></script>
 
 
 {% endblock %} {% block page %}
@@ -100,7 +100,7 @@ window_vars(user) }}
                   icon="launch"
                   color="primary"
                   type="a"
-                  :href="'/publicdash/' + props.row.id"
+                  :href="'/dashboard/' + props.row.id"
                   target="_blank"
                   class="q-mr-sm"
                   ><q-tooltip>Open public page</q-tooltip></q-btn
@@ -270,16 +270,16 @@ window_vars(user) }}
     <q-card>
       <q-card-section>
         <h6 class="text-subtitle1 q-my-none">
-          {{SITE_TITLE}} PublicDash
+          {{SITE_TITLE}} Dashboard
         </h6>
         <p>Dashboard for public links</p>
       </q-card-section>
       <q-card-section class="q-pa-none">
         <q-separator></q-separator>
         <q-list>
-          {% include "publicdash/_api_docs.html" %}
+          {% include "dashboard/_api_docs.html" %}
           <q-separator></q-separator>
-          {% include "publicdash/_publicdash.html" %}
+          {% include "dashboard/_dashboard.html" %}
         </q-list>
       </q-card-section>
     </q-card>

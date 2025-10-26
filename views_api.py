@@ -42,11 +42,11 @@ from .services import (
 owner_data_filters = parse_filters(OwnerDataFilters)
 client_data_filters = parse_filters(ClientDataFilters)
 
-publicdash_api_router = APIRouter()
+dashboard_api_router = APIRouter()
 
 
 ############################# Owner Data #############################
-@publicdash_api_router.post("/api/v1/owner_data", status_code=HTTPStatus.CREATED)
+@dashboard_api_router.post("/api/v1/owner_data", status_code=HTTPStatus.CREATED)
 async def api_create_owner_data(
     data: CreateOwnerData,
     user: User = Depends(check_user_exists),
@@ -55,7 +55,7 @@ async def api_create_owner_data(
     return owner_data
 
 
-@publicdash_api_router.put("/api/v1/owner_data/{owner_data_id}", status_code=HTTPStatus.CREATED)
+@dashboard_api_router.put("/api/v1/owner_data/{owner_data_id}", status_code=HTTPStatus.CREATED)
 async def api_update_owner_data(
     owner_data_id: str,
     data: CreateOwnerData,
@@ -70,7 +70,7 @@ async def api_update_owner_data(
     return owner_data
 
 
-@publicdash_api_router.get(
+@dashboard_api_router.get(
     "/api/v1/owner_data/paginated",
     name="Owner Data List",
     summary="get paginated list of owner_data",
@@ -89,7 +89,7 @@ async def api_get_owner_data_paginated(
     )
 
 
-@publicdash_api_router.get(
+@dashboard_api_router.get(
     "/api/v1/owner_data/{owner_data_id}",
     name="Get OwnerData",
     summary="Get the owner_data with this id.",
@@ -108,7 +108,7 @@ async def api_get_owner_data(
     return owner_data
 
 
-@publicdash_api_router.delete(
+@dashboard_api_router.delete(
     "/api/v1/owner_data/{owner_data_id}",
     name="Delete Owner Data",
     summary="Delete the owner_data " "and optionally all its associated client_data.",
@@ -129,7 +129,7 @@ async def api_delete_owner_data(
 
 
 ############################# Client Data #############################
-@publicdash_api_router.post(
+@dashboard_api_router.post(
     "/api/v1/client_data",
     name="Create Client Data",
     summary="Create new client data for the specified owner data.",
@@ -150,7 +150,7 @@ async def api_create_client_data(
     return client_data
 
 
-@publicdash_api_router.put(
+@dashboard_api_router.put(
     "/api/v1/client_data/public/{owner_data_id}",
     name="Submit new Client Data",
     summary="Submit new client data for the specified owner data." "This is a public endpoint.",
@@ -167,7 +167,7 @@ async def api_submit_public_client_data(
 
 
 
-@publicdash_api_router.put(
+@dashboard_api_router.put(
     "/api/v1/client_data/{client_data_id}",
     name="Update Client Data",
     summary="Update the client_data with this id.",
@@ -191,7 +191,7 @@ async def api_update_client_data(
     return client_data
 
 
-@publicdash_api_router.get(
+@dashboard_api_router.get(
     "/api/v1/client_data/paginated",
     name="Client Data List",
     summary="get paginated list of client_data",
@@ -218,7 +218,7 @@ async def api_get_client_data_paginated(
     )
 
 
-@publicdash_api_router.get(
+@dashboard_api_router.get(
     "/api/v1/client_data/{client_data_id}",
     name="Get Client Data",
     summary="Get the client data with this id.",
@@ -240,7 +240,7 @@ async def api_get_client_data(
     return client_data
 
 
-@publicdash_api_router.delete(
+@dashboard_api_router.delete(
     "/api/v1/client_data/{client_data_id}",
     name="Delete Client Data",
     summary="Delete the client_data",

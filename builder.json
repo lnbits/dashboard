@@ -1,6 +1,6 @@
 {
-    "id": "publicdash",
-    "name": "PublicDash",
+    "id": "dashboard",
+    "name": "Dashboard",
     "stub_version": "",
     "short_description": "Dashboard for public links",
     "description": "Simple page for dashboard links.",

@@ -6,27 +6,27 @@ from loguru import logger
 
 from .crud import db
 from .tasks import wait_for_paid_invoices
-from .views import publicdash_generic_router
-from .views_api import publicdash_api_router
+from .views import dashboard_generic_router
+from .views_api import dashboard_api_router
 
-publicdash_ext: APIRouter = APIRouter(
-    prefix="/publicdash", tags=["PublicDash"]
+dashboard_ext: APIRouter = APIRouter(
+    prefix="/dashboard", tags=["Dashboard"]
 )
-publicdash_ext.include_router(publicdash_generic_router)
-publicdash_ext.include_router(publicdash_api_router)
+dashboard_ext.include_router(dashboard_generic_router)
+dashboard_ext.include_router(dashboard_api_router)
 
 
-publicdash_static_files = [
+dashboard_static_files = [
     {
-        "path": "/publicdash/static",
-        "name": "publicdash_static",
+        "path": "/dashboard/static",
+        "name": "dashboard_static",
     }
 ]
 
 scheduled_tasks: list[asyncio.Task] = []
 
 
-def publicdash_stop():
+def dashboard_stop():
     for task in scheduled_tasks:
         try:
             task.cancel()
@@ -34,15 +34,15 @@ def publicdash_stop():
             logger.warning(ex)
 
 
-def publicdash_start():
-    task = create_permanent_unique_task("ext_publicdash", wait_for_paid_invoices)
+def dashboard_start():
+    task = create_permanent_unique_task("ext_dashboard", wait_for_paid_invoices)
     scheduled_tasks.append(task)
 
 
 __all__ = [
     "db",
-    "publicdash_ext",
-    "publicdash_start",
-    "publicdash_static_files",
-    "publicdash_stop",
+    "dashboard_ext",
+    "dashboard_start",
+    "dashboard_static_files",
+    "dashboard_stop",
 ]

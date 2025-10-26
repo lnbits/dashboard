@@ -14,7 +14,7 @@ async def m002_owner_data(db):
 
     await db.execute(
         f"""
-        CREATE TABLE publicdash.owner_data (
+        CREATE TABLE dashboard.owner_data (
             id TEXT PRIMARY KEY,
             user_id TEXT NOT NULL,
             name TEXT NOT NULL,
@@ -32,7 +32,7 @@ async def m003_client_data(db):
 
     await db.execute(
         f"""
-        CREATE TABLE publicdash.client_data (
+        CREATE TABLE dashboard.client_data (
             id TEXT PRIMARY KEY,
             owner_data_id TEXT NOT NULL,
             name TEXT NOT NULL,

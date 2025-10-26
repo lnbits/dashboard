@@ -15,7 +15,7 @@ from .services import payment_received_for_client_data
 
 async def wait_for_paid_invoices():
     invoice_queue = asyncio.Queue()
-    register_invoice_listener(invoice_queue, "ext_publicdash")
+    register_invoice_listener(invoice_queue, "ext_dashboard")
     while True:
         payment = await invoice_queue.get()
         await on_invoice_paid(payment)
@@ -25,12 +25,12 @@ async def wait_for_paid_invoices():
 
 
 async def on_invoice_paid(payment: Payment) -> None:
-    if payment.extra.get("tag") != "publicdash":
+    if payment.extra.get("tag") != "dashboard":
         return
 
-    logger.info(f"Invoice paid for publicdash: {payment.payment_hash}")
+    logger.info(f"Invoice paid for dashboard: {payment.payment_hash}")
 
     try:
         await payment_received_for_client_data(payment)
     except Exception as e:
-        logger.error(f"Error processing payment for publicdash: {e}")
+        logger.error(f"Error processing payment for dashboard: {e}")
