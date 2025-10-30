@@ -1,14 +1,14 @@
 {
   "name": "Dashboard",
-  "short_description": "Dashboard for public links",
+  "short_description": "Simple dashboard for public links",
   "tile": "/dashboard/static/image/dashboard.png",
   "version": "0.0.7",
   "min_lnbits_version": "1.1.0",
   "contributors": [
     {
-      "name": "LNbits community",
-      "uri": "https://t.me/lnbits",
-      "role": "Emotional support"
+      "name": "Ben Arc",
+      "uri": "https://github.com/arcbtc",
+      "role": "Ben"
     }
   ],
   "images": [
