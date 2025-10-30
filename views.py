@@ -1,5 +1,3 @@
-# Description: Add your page endpoints here.
-
 from http import HTTPStatus
 
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -9,7 +7,7 @@ from lnbits.decorators import check_user_exists
 from lnbits.helpers import template_renderer
 from lnbits.settings import settings
 
-from .crud import get_owner_data_by_id
+from .crud import get_client_data_paginated, get_owner_data_by_id
 
 dashboard_generic_router = APIRouter()
 
@@ -18,20 +16,9 @@ def dashboard_renderer():
     return template_renderer(["dashboard/templates"])
 
 
-#######################################
-##### ADD YOUR PAGE ENDPOINTS HERE ####
-#######################################
-
-
-# Backend admin page
-
-
 @dashboard_generic_router.get("/", response_class=HTMLResponse)
 async def index(req: Request, user: User = Depends(check_user_exists)):
     return dashboard_renderer().TemplateResponse("dashboard/index.html", {"request": req, "user": user.json()})
-
-
-# Frontend shareable page
 
 
 @dashboard_generic_router.get("/{owner_data_id}")
@@ -41,13 +28,19 @@ async def owner_data_public_page(req: Request, owner_data_id: str):
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Owner Data does not exist.")
 
     public_page_name = getattr(owner_data, "", "")
+    links = await get_client_data_paginated([owner_data_id])
+    if not links:
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Client Data does not exist.")
 
+    links = [link.dict(exclude={"created_at", "updated_at"}) for link in links.data]
     return dashboard_renderer().TemplateResponse(
         "dashboard/public_page.html",
         {
             "request": req,
             "owner_data_id": owner_data_id,
             "public_page_name": public_page_name,
+            "links": links,
+            "web_manifest": f"/dashboard/manifest/{owner_data_id}.webmanifest",
         },
     )
 
@@ -60,7 +53,7 @@ async def manifest(owner_data_id: str):
 
     return {
         "short_name": "Dashboard " + owner_data.name,
-        "name": "Scrum " + owner_data.name,
+        "name": "Dashboard " + owner_data.name,
         "icons": [
             {
                 "src": (
@@ -74,15 +67,16 @@ async def manifest(owner_data_id: str):
         ],
         "start_url": "/dashboard/" + owner_data_id,
         "background_color": "#1F2234",
-        "description": "Bitcoin Lightning Scrum",
+        "description": "LNbits dashboard",
         "display": "standalone",
         "scope": "/dashboard/" + owner_data_id,
-        "theme_color": "#1F2234",
+        "theme_color": "#2C1F34",
         "shortcuts": [
             {
-                "name": "Scrum " + owner_data.name + " - " + settings.lnbits_site_title,
-                "short_name": "Scrum " + owner_data.name,
-                "url": "/scrum/" + owner_data_id,
+                "name": "Dashboard " + owner_data.name + " - " + settings.lnbits_site_title,
+                "short_name": "Dashboard " + owner_data.name,
+                "description": "Dashboard " + owner_data.name,
+                "url": "/dashboard/" + owner_data_id,
             }
         ],
     }

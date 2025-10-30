@@ -1,4 +1,3 @@
-# Description: This file contains the extensions API endpoints.
 from http import HTTPStatus
 
 from fastapi import APIRouter, Depends
@@ -27,14 +26,10 @@ from .crud import (
 from .models import (
     ClientData,
     ClientDataFilters,
-    ClientDataPaymentRequest,  #
     CreateClientData,
     CreateOwnerData,
     OwnerData,
     OwnerDataFilters,
-)
-from .services import (
-    payment_request_for_client_data,  #
 )
 
 owner_data_filters = parse_filters(OwnerDataFilters)
@@ -136,7 +131,6 @@ async def api_delete_owner_data(
     status_code=HTTPStatus.CREATED,
 )
 async def api_create_client_data(
-    owner_data_id: str,
     data: CreateClientData,
     user: User = Depends(check_user_exists),
 ) -> ClientData:
@@ -144,38 +138,22 @@ async def api_create_client_data(
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
 
-    client_data = await create_client_data(owner_data_id, data)
+    client_data = await create_client_data(data)
     return client_data
 
 
 @dashboard_api_router.put(
-    "/api/v1/client_data/public/{owner_data_id}",
-    name="Submit new Client Data",
-    summary="Submit new client data for the specified owner data." "This is a public endpoint.",
-    response_description="The created client data.",
-    response_model=ClientDataPaymentRequest | None,
-)
-async def api_submit_public_client_data(
-    owner_data_id: str,
-    data: CreateClientData,
-) -> ClientDataPaymentRequest | None:
-
-    return await payment_request_for_client_data(owner_data_id, data)
-
-
-@dashboard_api_router.put(
-    "/api/v1/client_data/{client_data_id}",
+    "/api/v1/client_data",
     name="Update Client Data",
     summary="Update the client_data with this id.",
     response_description="The updated client data.",
     response_model=ClientData,
 )
 async def api_update_client_data(
-    client_data_id: str,
-    data: CreateClientData,
+    data: ClientData,
     user: User = Depends(check_user_exists),
 ) -> ClientData:
-    client_data = await get_client_data_by_id(client_data_id)
+    client_data = await get_client_data_by_id(data.id)
     if not client_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Client Data not found.")
 

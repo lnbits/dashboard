@@ -1,6 +1,3 @@
-# Description: This file contains the CRUD operations for talking to the database.
-
-
 from lnbits.db import Database, Filters, Page
 from lnbits.helpers import urlsafe_short_hash
 
@@ -101,8 +98,8 @@ async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
 ################################# Client Data ###########################
 
 
-async def create_client_data(owner_data_id: str, data: CreateClientData) -> ClientData:
-    client_data = ClientData(**data.dict(), id=urlsafe_short_hash(), owner_data_id=owner_data_id)
+async def create_client_data(data: CreateClientData) -> ClientData:
+    client_data = ClientData(**data.dict(), id=urlsafe_short_hash())
     await db.insert("dashboard.client_data", client_data)
     return client_data
 
@@ -132,6 +129,20 @@ async def get_client_data_by_id(
         {"id": client_data_id},
         ClientData,
     )
+
+
+async def get_client_data_by_owner_id(
+    owner_data_id: str,
+) -> list[ClientData]:
+    rows: list[dict] = await db.fetchall(
+        """
+            SELECT DISTINCT id FROM dashboard.client_data
+            WHERE owner_data_id = :owner_data_id
+        """,
+        {"owner_data_id": owner_data_id},
+    )
+
+    return [ClientData(**row) for row in rows]
 
 
 async def get_client_data_paginated(

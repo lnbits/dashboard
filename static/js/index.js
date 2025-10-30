@@ -7,46 +7,46 @@ window.app = Vue.createApp({
       icon: {
         show: false,
         options: [
-          'home',
-          'star',
+          'account_balance_wallet',
           'bolt',
-          'paid',
-          'savings',
-          'store',
-          'videocam',
-          'music_note',
-          'flight',
-          'train',
-          'directions_car',
-          'school',
-          'construction',
-          'science',
-          'sports_esports',
-          'sports_tennis',
-          'theaters',
-          'water',
-          'headset_mic',
-          'videogame_asset',
-          'person',
-          'group',
-          'pets',
-          'sunny',
-          'elderly',
-          'verified',
-          'snooze',
-          'mail',
-          'forum',
-          'shopping_cart',
+          'point_of_sale',
+          'qr_code',
+          'swap_horiz',
+          'receipt_long',
           'shopping_bag',
-          'attach_money',
-          'print_connect',
-          'dark_mode',
-          'light_mode',
-          'android',
-          'network_wifi',
+          'shopping_cart_checkout',
+          'analytics',
+          'bar_chart',
+          'groups',
+          'leaderboard',
+          'sports_esports',
+          'casino',
+          'event',
+          'task',
+          'reviews',
+          'link',
+          'public',
+          'lock_clock',
+          'hourglass_bottom',
+          'favorite',
+          'sensors',
+          'nfc',
+          'wifi',
+          'memory',
+          'settings',
           'shield',
-          'fitness_center',
-          'lunch_dining'
+          'developer_mode',
+          'code',
+          'light_mode',
+          'dark_mode',
+          'android',
+          'cloud_sync',
+          'extension',
+          'support',
+          'qr_code_2',
+          'house',
+          'credit_card',
+          'dashboard'
         ]
       },
       currencyOptions: ['sat'],
@@ -94,7 +94,9 @@ window.app = Vue.createApp({
       clientDataFormDialog: {
         show: false,
         ownerData: {label: 'All Owner Data', value: ''},
-        data: {}
+        data: {
+          icon: 'bolt'
+        }
       },
       clientDataList: [],
       clientDataTable: {
@@ -261,6 +263,7 @@ window.app = Vue.createApp({
     async saveClientData() {
       try {
         const data = {extra: {}, ...this.clientDataFormDialog.data}
+        console.log(data)
         const method = data.id ? 'PUT' : 'POST'
         await LNbits.api.request(
           method,
@@ -327,21 +330,12 @@ window.app = Vue.createApp({
     //////////////// Utils ////////////////////////
     dateFromNow(date) {
       return moment(date).fromNow()
-    },
-    async fetchCurrencies() {
-      try {
-        const response = await LNbits.api.request('GET', '/api/v1/currencies')
-        this.currencyOptions = ['sat', ...response.data]
-      } catch (error) {
-        LNbits.utils.notifyApiError(error)
-      }
     }
   },
   ///////////////////////////////////////////////////
   //////LIFECYCLE FUNCTIONS RUNNING ON PAGE LOAD/////
   ///////////////////////////////////////////////////
   async created() {
-    this.fetchCurrencies()
     this.getOwnerData()
     this.getClientData()
   }

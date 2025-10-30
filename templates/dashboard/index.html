@@ -296,36 +296,43 @@
         filled
         dense
         v-model.trim="clientDataFormDialog.data.owner_data_id"
-        label="Owner Data"
+        label="Dashboard"
         :options="ownerDataList.map(x => ({label: x.name || x.id, value: x.id}))"
-        hint="Select the associated Owner Data"
+        hint="Select the associated Dashboard"
         emit-value
         map-options
       ></q-select>
 
-      <q-input
-        filled
-        dense
-        v-model.trim="clientDataFormDialog.data.name"
-        label="Name"
-        hint=" "
-      ></q-input>
+      <div class="row">
+        <div class="col">
+          <q-input
+            filled
+            dense
+            v-model.trim="clientDataFormDialog.data.name"
+            label="Name"
+            hint=" "
+          ></q-input>
+        </div>
+        <div class="col">
+          <q-btn
+            class="q-ml-md"
+            filled
+            color="primary"
+            @click="icon.show = true"
+            label="item icon"
+            :icon="clientDataFormDialog.data.icon ? clientDataFormDialog.data.icon : 'point_of_sale'"
+          ></q-btn>
+        </div>
+      </div>
 
       <q-input
         filled
         dense
         v-model.trim="clientDataFormDialog.data.link"
-        label="Link"
+        label="URL"
+        type="url"
         hint=" "
       ></q-input>
-
-      <q-btn
-        filled
-        dense
-        @click="icon.show = true"
-        label="icon"
-        hint=" "
-      ></q-btn>
 
       <div class="row q-mt-lg">
         <q-btn @click="saveClientData" unelevated color="primary">
@@ -344,10 +351,10 @@
         <q-btn
           v-for="(thisIcon, index) in icon.options"
           :key="index"
-          @click="clientDataFormDialog.data.icon = thisIcon && icon.show = false"
+          @click="clientDataFormDialog.data.icon = thisIcon; icon.show = false"
           round
           text-color="black"
-          color="grey-5"
+          color="primary"
           size="md"
           :icon="thisIcon"
           class="q-mb-sm"
