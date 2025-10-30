@@ -5,8 +5,6 @@
 empty_dict: dict[str, str] = {}
 
 
-
-
 async def m002_owner_data(db):
     """
     Initial owner data table.

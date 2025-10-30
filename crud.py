@@ -175,5 +175,3 @@ async def delete_client_data(owner_data_id: str, client_data_id: str) -> None:
         """,
         {"id": client_data_id, "owner_data_id": owner_data_id},
     )
-
-

@@ -8,6 +8,7 @@ from lnbits.core.models import User
 from lnbits.decorators import check_user_exists
 from lnbits.helpers import template_renderer
 from lnbits.settings import settings
+
 from .crud import get_owner_data_by_id
 
 dashboard_generic_router = APIRouter()
@@ -27,9 +28,7 @@ def dashboard_renderer():
 
 @dashboard_generic_router.get("/", response_class=HTMLResponse)
 async def index(req: Request, user: User = Depends(check_user_exists)):
-    return dashboard_renderer().TemplateResponse(
-        "dashboard/index.html", {"request": req, "user": user.json()}
-    )
+    return dashboard_renderer().TemplateResponse("dashboard/index.html", {"request": req, "user": user.json()})
 
 
 # Frontend shareable page
@@ -51,7 +50,6 @@ async def owner_data_public_page(req: Request, owner_data_id: str):
             "public_page_name": public_page_name,
         },
     )
-
 
 
 @dashboard_generic_router.get("/manifest/{owner_data_id}.webmanifest")

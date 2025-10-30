@@ -7,14 +7,13 @@ from pydantic import BaseModel, Field
 ########################### Owner Data ############################
 class CreateOwnerData(BaseModel):
     name: str
-    
 
 
 class OwnerData(BaseModel):
     id: str
     user_id: str
     name: str
-    
+
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -26,7 +25,6 @@ class OwnerDataFilters(FilterModel):
 
     __sort_fields__ = [
         "name",
-        
         "created_at",
         "updated_at",
     ]
@@ -43,7 +41,6 @@ class CreateClientData(BaseModel):
     name: str
     link: str
     icon: str
-    
 
 
 class ClientData(BaseModel):
@@ -52,7 +49,7 @@ class ClientData(BaseModel):
     name: str
     link: str
     icon: str
-    
+
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -63,23 +60,20 @@ class ClientDataPaymentRequest(BaseModel):
     payment_request: str | None = None
 
 
-
-
 class ClientDataFilters(FilterModel):
     __search_fields__ = [
-        "name","link","icon",
+        "name",
+        "link",
+        "icon",
     ]
 
     __sort_fields__ = [
         "name",
         "link",
         "icon",
-        
         "created_at",
         "updated_at",
     ]
 
     created_at: datetime | None
     updated_at: datetime | None
-
-

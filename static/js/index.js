@@ -5,8 +5,8 @@ window.app = Vue.createApp({
   data: function () {
     return {
       icon: {
-      show: false,
-      options: [
+        show: false,
+        options: [
           'home',
           'star',
           'bolt',
@@ -58,8 +58,7 @@ window.app = Vue.createApp({
       ownerDataFormDialog: {
         show: false,
         data: {
-          name: null,
-          
+          name: null
         }
       },
       ownerDataList: [],
@@ -67,10 +66,21 @@ window.app = Vue.createApp({
         search: '',
         loading: false,
         columns: [
-          {"name": "name", "align": "left", "label": "Name", "field": "name", "sortable": true},
-          {"name": "updated_at", "align": "left", "label": "Updated At", "field": "updated_at", "sortable": true},
-          {"name": "id", "align": "left", "label": "ID", "field": "id", "sortable": true},
-          
+          {
+            name: 'name',
+            align: 'left',
+            label: 'Name',
+            field: 'name',
+            sortable: true
+          },
+          {
+            name: 'updated_at',
+            align: 'left',
+            label: 'Updated At',
+            field: 'updated_at',
+            sortable: true
+          },
+          {name: 'id', align: 'left', label: 'ID', field: 'id', sortable: true}
         ],
         pagination: {
           sortBy: 'updated_at',
@@ -91,12 +101,35 @@ window.app = Vue.createApp({
         search: '',
         loading: false,
         columns: [
-          {"name": "name", "align": "left", "label": "Name", "field": "name", "sortable": true},
-          {"name": "link", "align": "left", "label": "Link", "field": "link", "sortable": true},
-          {"name": "icon", "align": "left", "label": "icon", "field": "icon", "sortable": true},
-          {"name": "updated_at", "align": "left", "label": "Updated At", "field": "updated_at", "sortable": true},
-          {"name": "id", "align": "left", "label": "ID", "field": "id", "sortable": true},
-          
+          {
+            name: 'name',
+            align: 'left',
+            label: 'Name',
+            field: 'name',
+            sortable: true
+          },
+          {
+            name: 'link',
+            align: 'left',
+            label: 'Link',
+            field: 'link',
+            sortable: true
+          },
+          {
+            name: 'icon',
+            align: 'left',
+            label: 'icon',
+            field: 'icon',
+            sortable: true
+          },
+          {
+            name: 'updated_at',
+            align: 'left',
+            label: 'Updated At',
+            field: 'updated_at',
+            sortable: true
+          },
+          {name: 'id', align: 'left', label: 'ID', field: 'id', sortable: true}
         ],
         pagination: {
           sortBy: 'updated_at',
@@ -139,12 +172,10 @@ window.app = Vue.createApp({
   },
 
   methods: {
-
     //////////////// Owner Data ////////////////////////
     async showNewOwnerDataForm() {
       this.ownerDataFormDialog.data = {
-          name: null,
-          
+        name: null
       }
       this.ownerDataFormDialog.show = true
     },
@@ -153,7 +184,6 @@ window.app = Vue.createApp({
       this.ownerDataFormDialog.show = true
     },
     async saveOwnerData() {
-      
       try {
         const data = {extra: {}, ...this.ownerDataFormDialog.data}
         const method = data.id ? 'PUT' : 'POST'
@@ -172,7 +202,6 @@ window.app = Vue.createApp({
     },
 
     async getOwnerData(props) {
-      
       try {
         this.ownerDataTable.loading = true
         const params = LNbits.utils.prepareFilterQuery(
@@ -197,7 +226,6 @@ window.app = Vue.createApp({
         .confirmDialog('Are you sure you want to delete this Owner Data?')
         .onOk(async () => {
           try {
-            
             await LNbits.api.request(
               'DELETE',
               '/dashboard/api/v1/owner_data/' + ownerDataId,
@@ -220,9 +248,9 @@ window.app = Vue.createApp({
     //////////////// Client Data ////////////////////////
     async showNewItemForm() {
       this.clientDataFormDialog.data = {
-          name: null,
-          icon: null,
-          link: null,
+        name: null,
+        icon: null,
+        link: null
       }
       this.clientDataFormDialog.show = true
     },
@@ -231,7 +259,6 @@ window.app = Vue.createApp({
       this.clientDataFormDialog.show = true
     },
     async saveClientData() {
-      
       try {
         const data = {extra: {}, ...this.clientDataFormDialog.data}
         const method = data.id ? 'PUT' : 'POST'
@@ -249,7 +276,6 @@ window.app = Vue.createApp({
     },
 
     async getClientData(props) {
-      
       try {
         this.clientDataTable.loading = true
         let params = LNbits.utils.prepareFilterQuery(
@@ -278,7 +304,6 @@ window.app = Vue.createApp({
         .confirmDialog('Are you sure you want to delete this Client Data?')
         .onOk(async () => {
           try {
-            
             await LNbits.api.request(
               'DELETE',
               '/dashboard/api/v1/client_data/' + clientDataId,
@@ -319,8 +344,5 @@ window.app = Vue.createApp({
     this.fetchCurrencies()
     this.getOwnerData()
     this.getClientData()
-
-    
-    
   }
 })

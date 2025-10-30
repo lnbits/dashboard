@@ -2,32 +2,19 @@
 <!--//PAGE FOR THE EXTENSIONS BACKEND IN LNBITS//////-->
 <!--/////////////////////////////////////////////////-->
 
-
-{% extends "base.html" %}
-
-
-{% from "macros.jinja" import window_vars with context %} {% block scripts %} {{
-window_vars(user) }}
-
+{% extends "base.html" %} {% from "macros.jinja" import window_vars with context
+%} {% block scripts %} {{ window_vars(user) }}
 
 <script src="{{ static_url_for('dashboard/static', path='js/index.js') }}"></script>
-
 
 {% endblock %} {% block page %}
 <div class="row q-col-gutter-md">
   <div class="col-12 col-md-8 col-lg-7 q-gutter-y-md">
-    
-
     <div class="q-mt-lg">
       <span class="text-h5">Dashboards</span>
     </div>
-    <q-card
-      id="ownerDataCard"
-      class="q-mt-xs"
-    >
-      <q-card-section
-        class=""
-      >
+    <q-card id="ownerDataCard" class="q-mt-xs">
+      <q-card-section class="">
         <div class="row items-center no-wrap q-mb-md">
           <div class="col">
             <q-input
@@ -51,7 +38,6 @@ window_vars(user) }}
             </q-input>
           </div>
           <div class="col-auto">
-            
             <q-btn
               @click="showNewOwnerDataForm()"
               unelevated
@@ -60,7 +46,7 @@ window_vars(user) }}
             >
               New dashboard
             </q-btn>
-            
+
             <q-btn
               flat
               color="grey"
@@ -92,7 +78,6 @@ window_vars(user) }}
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td auto-width>
-                
                 <q-btn
                   flat
                   dense
@@ -105,7 +90,7 @@ window_vars(user) }}
                   class="q-mr-sm"
                   ><q-tooltip>Open public page</q-tooltip></q-btn
                 >
-                 
+
                 <q-btn
                   flat
                   dense
@@ -117,7 +102,7 @@ window_vars(user) }}
                 >
                   <q-tooltip> Edit </q-tooltip>
                 </q-btn>
-                
+
                 <q-btn
                   flat
                   dense
@@ -146,13 +131,8 @@ window_vars(user) }}
     <div class="q-mt-lg">
       <span class="text-h5">Items</span>
     </div>
-    <q-card
-      id="clientDataCard"
-      class="q-mt-xs"
-    >
-      <q-card-section
-        class=""
-      >
+    <q-card id="clientDataCard" class="q-mt-xs">
+      <q-card-section class="">
         <div class="row items-center no-wrap q-mb-md">
           <div class="col">
             <q-input
@@ -186,13 +166,7 @@ window_vars(user) }}
             ></q-select>
           </div>
           <div class="col-auto">
-
-            <q-btn
-              @click="showNewItemForm()"
-              unelevated
-              split
-              color="primary"
-            >
+            <q-btn @click="showNewItemForm()" unelevated split color="primary">
               New item
             </q-btn>
 
@@ -227,7 +201,6 @@ window_vars(user) }}
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td auto-width>
-                
                 <q-btn
                   flat
                   dense
@@ -239,7 +212,7 @@ window_vars(user) }}
                 >
                   <q-tooltip> Edit </q-tooltip>
                 </q-btn>
-                
+
                 <q-btn
                   flat
                   dense
@@ -265,13 +238,11 @@ window_vars(user) }}
       </q-card-section>
     </q-card>
   </div>
-  
+
   <div class="col-12 col-md-4 col-lg-5 q-gutter-y-md">
     <q-card>
       <q-card-section>
-        <h6 class="text-subtitle1 q-my-none">
-          {{SITE_TITLE}} Dashboard
-        </h6>
+        <h6 class="text-subtitle1 q-my-none">{{SITE_TITLE}} Dashboard</h6>
         <p>Dashboard for public links</p>
       </q-card-section>
       <q-card-section class="q-pa-none">
@@ -284,12 +255,10 @@ window_vars(user) }}
       </q-card-section>
     </q-card>
   </div>
-  
 
   <!--/////////////////////////////////////////////////-->
   <!--//////////////FORM DIALOG////////////////////////-->
   <!--/////////////////////////////////////////////////-->
-
 
   <q-dialog v-model="ownerDataFormDialog.show" position="top">
     <q-card
@@ -298,15 +267,14 @@ window_vars(user) }}
     >
       <span class="text-h5">Dashboard</span>
 
-       
-<q-input
-  filled
-  dense
-  v-model.trim="ownerDataFormDialog.data.name"
-  label="Name"
-  hint="Dashboard name "
-></q-input>
- 
+      <q-input
+        filled
+        dense
+        v-model.trim="ownerDataFormDialog.data.name"
+        label="Name"
+        hint="Dashboard name "
+      ></q-input>
+
       <div class="row q-mt-lg">
         <q-btn @click="saveOwnerData" unelevated color="primary">
           <span v-if="ownerDataFormDialog.data.id">Update</span>
@@ -334,31 +302,31 @@ window_vars(user) }}
         emit-value
         map-options
       ></q-select>
-      
-<q-input
-  filled
-  dense
-  v-model.trim="clientDataFormDialog.data.name"
-  label="Name"
-  hint=" "
-></q-input>
-  
-<q-input
-  filled
-  dense
-  v-model.trim="clientDataFormDialog.data.link"
-  label="Link"
-  hint=" "
-></q-input>
-  
-<q-btn
-  filled
-  dense
-  @click="icon.show = true"
-  label="icon"
-  hint=" "
-></q-btn>
- 
+
+      <q-input
+        filled
+        dense
+        v-model.trim="clientDataFormDialog.data.name"
+        label="Name"
+        hint=" "
+      ></q-input>
+
+      <q-input
+        filled
+        dense
+        v-model.trim="clientDataFormDialog.data.link"
+        label="Link"
+        hint=" "
+      ></q-input>
+
+      <q-btn
+        filled
+        dense
+        @click="icon.show = true"
+        label="icon"
+        hint=" "
+      ></q-btn>
+
       <div class="row q-mt-lg">
         <q-btn @click="saveClientData" unelevated color="primary">
           <span v-if="clientDataFormDialog.data.id">Update</span>
@@ -370,22 +338,22 @@ window_vars(user) }}
   </q-dialog>
 
   <q-dialog v-model="icon.show" position="top">
-        <q-card class="q-pa-lg q-pt-xl lnbits__dialog-card">
-            <div class="q-gutter-sm q-pa-sm flex flex-wrap justify-center">
-              <!-- Loop through all icons -->
-              <q-btn
-                v-for="(thisIcon, index) in icon.options"
-                :key="index"
-                @click="clientDataFormDialog.data.icon = thisIcon && icon.show = false"
-                round
-                text-color="black"
-                color="grey-5"
-                size="md"
-                :icon="thisIcon"
-                class="q-mb-sm"
-              ></q-btn>
-            </div>
-        </q-card>
-      </q-dialog>
+    <q-card class="q-pa-lg q-pt-xl lnbits__dialog-card">
+      <div class="q-gutter-sm q-pa-sm flex flex-wrap justify-center">
+        <!-- Loop through all icons -->
+        <q-btn
+          v-for="(thisIcon, index) in icon.options"
+          :key="index"
+          @click="clientDataFormDialog.data.icon = thisIcon && icon.show = false"
+          round
+          text-color="black"
+          color="grey-5"
+          size="md"
+          :icon="thisIcon"
+          class="q-mb-sm"
+        ></q-btn>
+      </div>
+    </q-card>
+  </q-dialog>
 </div>
 {% endblock %}

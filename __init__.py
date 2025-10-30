@@ -9,9 +9,7 @@ from .tasks import wait_for_paid_invoices
 from .views import dashboard_generic_router
 from .views_api import dashboard_api_router
 
-dashboard_ext: APIRouter = APIRouter(
-    prefix="/dashboard", tags=["Dashboard"]
-)
+dashboard_ext: APIRouter = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 dashboard_ext.include_router(dashboard_generic_router)
 dashboard_ext.include_router(dashboard_api_router)
 
@@ -40,9 +38,9 @@ def dashboard_start():
 
 
 __all__ = [
-    "db",
     "dashboard_ext",
     "dashboard_start",
     "dashboard_static_files",
     "dashboard_stop",
+    "db",
 ]

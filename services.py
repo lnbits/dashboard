@@ -1,15 +1,12 @@
 from lnbits.core.models import Payment
-from lnbits.core.services import create_invoice
 from loguru import logger
 
 from .crud import (
     create_client_data,
-    get_client_data_by_id,
     get_owner_data_by_id,
-    update_client_data,
 )
 from .models import (
-    ClientDataPaymentRequest,  # 
+    ClientDataPaymentRequest,  #
     CreateClientData,
 )
 
@@ -30,10 +27,6 @@ async def payment_request_for_client_data(
     return client_data_resp
 
 
-
-
 async def payment_received_for_client_data(payment: Payment) -> bool:
     logger.info("Payment receive logic generation is disabled.")
     return True
-
-

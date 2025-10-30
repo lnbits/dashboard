@@ -27,17 +27,15 @@ from .crud import (
 from .models import (
     ClientData,
     ClientDataFilters,
-    ClientDataPaymentRequest,  # 
+    ClientDataPaymentRequest,  #
     CreateClientData,
     CreateOwnerData,
     OwnerData,
     OwnerDataFilters,
 )
-
 from .services import (
-    payment_request_for_client_data,  # 
+    payment_request_for_client_data,  #
 )
-
 
 owner_data_filters = parse_filters(OwnerDataFilters)
 client_data_filters = parse_filters(ClientDataFilters)
@@ -165,8 +163,6 @@ async def api_submit_public_client_data(
     return await payment_request_for_client_data(owner_data_id, data)
 
 
-
-
 @dashboard_api_router.put(
     "/api/v1/client_data/{client_data_id}",
     name="Update Client Data",
@@ -261,5 +257,3 @@ async def api_delete_client_data(
 
     await delete_client_data(owner_data.id, client_data_id)
     return SimpleStatus(success=True, message="Client Data Deleted")
-
-

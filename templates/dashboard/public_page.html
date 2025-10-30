@@ -34,9 +34,7 @@
       <q-card-section class="q-pa-none q-mb-md">
         <span class="text-h5">Client Data</span>
       </q-card-section>
-      <q-card-section class="q-pa-none q-col-gutter-md">
-        
-      </q-card-section>
+      <q-card-section class="q-pa-none q-col-gutter-md"> </q-card-section>
 
       <q-card-section class="q-pa-none q-mt-md">
         <div class="row">
@@ -81,7 +79,6 @@
     },
     methods: {
       async submitClientData() {
-        
         try {
           const {data} = await LNbits.api.request(
             'PUT',
@@ -96,7 +93,7 @@
         } catch (error) {
           LNbits.utils.notifyApiError(error)
         }
-      },
+      }
     },
     created: function () {
       // Will trigger payment reaction when payment received, sent from tasks.py
