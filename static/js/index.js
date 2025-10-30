@@ -54,7 +54,10 @@ window.app = Vue.createApp({
         show: false,
         data: {}
       },
-
+      qr: {
+        show: false,
+        data: ''
+      },
       ownerDataFormDialog: {
         show: false,
         data: {
@@ -325,6 +328,12 @@ window.app = Vue.createApp({
         this.clientDataList,
         'client_data_' + new Date().toISOString().slice(0, 10) + '.csv'
       )
+    },
+    async showQR(clientDataId) {
+      console.log(clientDataId)
+      this.qr.data = window.location.origin + '/dashboard/' + clientDataId
+      console.log(this.qr.data)
+      this.qr.show = true
     },
 
     //////////////// Utils ////////////////////////

@@ -82,6 +82,17 @@
                   flat
                   dense
                   size="xs"
+                  @click="showQR(props.row.id)"
+                  icon="qr_code"
+                  color="light-green"
+                  class="q-mr-sm"
+                >
+                  <q-tooltip>Show QR Code</q-tooltip>
+                </q-btn>
+                <q-btn
+                  flat
+                  dense
+                  size="xs"
                   icon="launch"
                   color="primary"
                   type="a"
@@ -359,6 +370,13 @@
           :icon="thisIcon"
           class="q-mb-sm"
         ></q-btn>
+      </div>
+    </q-card>
+  </q-dialog>
+  <q-dialog v-model="qr.show" position="top">
+    <q-card class="q-pa-lg q-pt-xl lnbits__dialog-card">
+      <div class="q-gutter-sm q-pa-sm flex flex-wrap justify-center">
+        <lnbits-qrcode :value="qr.data" :size="200"></lnbits-qrcode>
       </div>
     </q-card>
   </q-dialog>
