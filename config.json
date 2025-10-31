@@ -13,7 +13,7 @@
   ],
   "images": [
     {
-      "uri": "static/images/pos.png"
+      "uri": "https://raw.githubusercontent.com/lnbits/dashboard/refs/heads/main/static/image/pos.png"
     }
   ],
   "description_md": "https://raw.githubusercontent.com/lnbits/dashboard/main/description.md",
