@@ -13,7 +13,9 @@
         class="q-ml-md q-mt-md"
         ype="a"
         :href="link.link"
-      ></q-btn>
+      >
+        <q-tooltip><span v-text="link.name"></span></q-tooltip>
+      </q-btn>
     </div>
   </q-page>
 </q-page-container>
