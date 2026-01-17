@@ -14,7 +14,7 @@ window.app = Vue.createApp({
           'swap_horiz',
           'receipt_long',
           'shopping_bag',
-          'shopping_cart_checkout',
+          'shopping_cart',
           'analytics',
           'bar_chart',
           'groups',
