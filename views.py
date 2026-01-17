@@ -29,7 +29,7 @@ async def owner_data_public_page(req: Request, owner_data_id: str):
 
     public_page_name = getattr(owner_data, "", "")
     links = await get_client_data_paginated([owner_data_id])
-    if not links:
+    if not links.data:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Client Data does not exist.")
 
     links = [link.dict(exclude={"created_at", "updated_at"}) for link in links.data]
