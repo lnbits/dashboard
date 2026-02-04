@@ -17,8 +17,32 @@
         <q-tooltip><span v-text="link.name"></span></q-tooltip>
       </q-btn>
     </div>
+    <q-page-sticky position="bottom" :offset="[0, 24]">
+      <q-btn
+        round
+        flat
+        color="primary"
+        icon="qr_code"
+        @click="qrDialog.show = true"
+      ></q-btn>
+    </q-page-sticky>
   </q-page>
 </q-page-container>
+
+<q-dialog v-model="qrDialog.show" position="top">
+  <q-card class="q-pa-lg lnbits__dialog-card">
+    <q-card-section class="q-pa-none q-mb-md">
+      <lnbits-qrcode :value="publicUrl" :size="220"></lnbits-qrcode>
+    </q-card-section>
+    <q-card-section class="q-pt-none">
+      <div class="text-subtitle2">Scan to open this dashboard</div>
+      <div class="text-caption text-grey" v-text="publicUrl"></div>
+    </q-card-section>
+    <q-card-section class="row items-center q-pt-none">
+      <q-btn v-close-popup flat color="grey" label="Close"></q-btn>
+    </q-card-section>
+  </q-card>
+</q-dialog>
 {% endblock %} {% block scripts %}
 <style>
   .q-header,
@@ -39,7 +63,11 @@
         ownerDataId: '{{ owner_data_id }}',
         clientDataId: null,
         publicClientData: {},
-        links: links
+        links: links,
+        publicUrl: window.location.origin + '/dashboard/' + '{{ owner_data_id }}',
+        qrDialog: {
+          show: false
+        }
       }
     }
   })
