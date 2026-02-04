@@ -29,17 +29,17 @@ async def owner_data_public_page(req: Request, owner_data_id: str):
 
     public_page_name = getattr(owner_data, "", "")
     links = await get_client_data_paginated([owner_data_id])
-    if not links:
+    if not links.data:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Client Data does not exist.")
 
-    links = [link.dict(exclude={"created_at", "updated_at"}) for link in links.data]
+    links_list = [link.dict(exclude={"created_at", "updated_at"}) for link in links.data]
     return dashboard_renderer().TemplateResponse(
         "dashboard/public_page.html",
         {
             "request": req,
             "owner_data_id": owner_data_id,
             "public_page_name": public_page_name,
-            "links": links,
+            "links": links_list,
             "web_manifest": f"/dashboard/manifest/{owner_data_id}.webmanifest",
         },
     )
