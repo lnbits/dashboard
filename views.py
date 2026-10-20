@@ -18,7 +18,9 @@ def dashboard_renderer():
 
 @dashboard_generic_router.get("/", response_class=HTMLResponse)
 async def index(req: Request, user: User = Depends(check_user_exists)):
-    return dashboard_renderer().TemplateResponse("dashboard/index.html", {"request": req, "user": user.json()})
+    return dashboard_renderer().TemplateResponse(
+        "dashboard/index.html", {"request": req, "user": user.model_dump_json()}
+    )
 
 
 @dashboard_generic_router.get("/{owner_data_id}")
@@ -32,7 +34,7 @@ async def owner_data_public_page(req: Request, owner_data_id: str):
     if not links.data:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Client Data does not exist.")
 
-    links_list = [link.dict(exclude={"created_at", "updated_at"}) for link in links.data]
+    links_list = [link.model_dump(exclude={"created_at", "updated_at"}) for link in links.data]
     return dashboard_renderer().TemplateResponse(
         "dashboard/public_page.html",
         {
