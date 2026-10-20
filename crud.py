@@ -15,7 +15,7 @@ db = Database("ext_dashboard")
 
 ########################### Owner Data ############################
 async def create_owner_data(user_id: str, data: CreateOwnerData) -> OwnerData:
-    owner_data = OwnerData(**data.dict(), id=urlsafe_short_hash(), user_id=user_id)
+    owner_data = OwnerData(**data.model_dump(), id=urlsafe_short_hash(), user_id=user_id)
     await db.insert("dashboard.owner_data", owner_data)
     return owner_data
 
@@ -99,7 +99,7 @@ async def delete_owner_data(user_id: str, owner_data_id: str) -> None:
 
 
 async def create_client_data(data: CreateClientData) -> ClientData:
-    client_data = ClientData(**data.dict(), id=urlsafe_short_hash())
+    client_data = ClientData(**data.model_dump(), id=urlsafe_short_hash())
     await db.insert("dashboard.client_data", client_data)
     return client_data
 

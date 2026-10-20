@@ -59,7 +59,7 @@ async def api_update_owner_data(
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
     if owner_data.user_id != user.id:
         raise HTTPException(HTTPStatus.FORBIDDEN, "You do not own this owner data.")
-    owner_data = await update_owner_data(OwnerData(**{**owner_data.dict(), **data.dict()}))
+    owner_data = await update_owner_data(OwnerData(**{**owner_data.model_dump(), **data.model_dump()}))
     return owner_data
 
 
@@ -161,7 +161,7 @@ async def api_update_client_data(
     if not owner_data:
         raise HTTPException(HTTPStatus.NOT_FOUND, "Owner Data not found.")
 
-    client_data = await update_client_data(ClientData(**{**client_data.dict(), **data.dict()}))
+    client_data = await update_client_data(ClientData(**{**client_data.model_dump(), **data.model_dump()}))
     return client_data
 
 
