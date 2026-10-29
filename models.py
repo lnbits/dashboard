@@ -29,8 +29,8 @@ class OwnerDataFilters(FilterModel):
         "updated_at",
     ]
 
-    created_at: datetime | None
-    updated_at: datetime | None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
 
 
 ################################# Client Data ###########################
@@ -75,5 +75,5 @@ class ClientDataFilters(FilterModel):
         "updated_at",
     ]
 
-    created_at: datetime | None
-    updated_at: datetime | None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
