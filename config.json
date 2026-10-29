@@ -2,8 +2,8 @@
   "name": "Dashboard",
   "short_description": "Simple dashboard for public links",
   "tile": "/dashboard/static/image/dashboard.png",
-  "version": "0.0.7",
-  "min_lnbits_version": "1.7.0",
+  "version": "0.1.0",
+  "min_lnbits_version": "1.7.0-rc1",
   "contributors": [
     {
       "name": "Ben Arc",
